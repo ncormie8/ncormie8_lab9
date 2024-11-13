@@ -29,10 +29,12 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
     coeff = t_step/(2*h) # coefficient used by lax method
     p_max = rho_sl[0]  # setting the max value of rho to 1st index of input initial condtions
 
-    # Initializing density, flow, and final output arrays
+    # Initializing density, flow, final output, x scale, and time scale arrays
     rho = np.zeros(shape=(N))
     flow = np.zeros(shape=(N))
     rho_final = np.empty((N,n_step+1))
+    xplot = (np.arange(N)-1/2.)*h - L/2.         
+    tplot = np.linspace(0,n_step*t_step,n_step)
 
     # Incorporating stoplight initial condtions for rho
     rho[int(N/4):int(N/2)] = p_max
@@ -54,12 +56,16 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
     # Compute rho using the lax method
     rho[:] = .5*( rho[ip] + rho[im] ) - coeff*( flow[ip] - flow[im] )
 
-
+    # Filling the output array with the calculated values of rho at all times
+    rho_final[:,1:n_step] = np.copy(rho) 
 
     # return the solved values of rho over time
-    return rho_final
+    return rho_final, xplot, tplot
 
-soln1 = advection(divisions,length,vm,rho_y0)
+r_xt, xp, tp = advection(divisions,length,vm,rho_y0)
+print(np.shape(r_xt))
+print(np.shape(xp))
+print(np.shape(tp))
 
 # Part 2
 
