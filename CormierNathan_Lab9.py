@@ -50,18 +50,19 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
     im = np.arange(N) - 1  
     im[0] = N-1          # im = i-1 with periodic b.c.
     
-    # Compute the flow = (Density)*(Velocity)
-    flow[:] = rho[:] * (v_max*(1 - rho[:]/p_max))
+    for istep in range(n_step):
+        # Compute the flow = (Density)*(Velocity)
+        flow[:] = rho[:] * (v_max*(1 - rho[:]/p_max))
     
     # Compute rho using the lax method
-    rho[:] = .5*( rho[ip] + rho[im] ) - coeff*( flow[ip] - flow[im] )
+        rho[:] = .5*( rho[ip] + rho[im] ) - coeff*( flow[ip] - flow[im] )
 
     # Filling the output array with the calculated values of rho at all times
-    rho = np.expand_dims(rho,axis=1)
-    rho_final[:,1:n_step] = np.copy(rho)
+        rho_final[:,istep+1] = np.copy(rho)
+    
+    # return the solved values of rho over time
     print(rho_final[:,1])
     print(rho_final[:,2])
-    # return the solved values of rho over time
     return rho_final, xplot, tplot
 
 # Part 2
@@ -76,12 +77,11 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
 # and assigning the output values of rho, xplot, and tplot for graphing
 r_xt, xp, tp = advection(divisions,length,vm,rho_y0)
 
-print(np.flipud(np.rot90(r_xt)))
 # 2D contour plotting code
-# lvls = np.linspace(0., 1., num=11) 
-# ct2d = plt.contour(xp, tp, np.flipud(np.rot90(r_xt)), lvls) 
-# plt.clabel(ct2d, fmt='%1.2f') 
-# plt.xlabel('x')
-# plt.ylabel('time')
-# plt.title('Density contours')
-# plt.show()
+lvls = np.linspace(0., 1., num=11) 
+ct2d = plt.contour(xp, tp, np.flipud(np.rot90(r_xt)), lvls) 
+plt.clabel(ct2d, fmt='%1.2f') 
+plt.xlabel('x')
+plt.ylabel('time')
+plt.title('Density contours')
+plt.show()
