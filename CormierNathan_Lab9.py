@@ -26,7 +26,7 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
     h = L/N            # grid spacing for BCs
     t_step = h/v_max   # setting timestep to recommended value
     n_step = 1500      # minimum number of steps for integration
-    coeff = t_step/2*h # coefficient used by lax method
+    coeff = t_step/(2*h) # coefficient used by lax method
     p_max = rho_sl[0]  # setting the max value of rho to 1st index of input initial condtions
 
     # Initializing density and flow arrays
@@ -35,11 +35,8 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
 
     # Incorporating stoplight initial condtions
     rho[int(N/4):int(N/2)] = p_max
-    print(rho[int(N/4):int(N/2)])
     rho[0:int(N/4)] = rho_sl[1]
-    print(rho[0:int(N/4)])
     rho[int(N/2):] = rho_sl[1]
-    print(rho[int(N/2):])
 
     # Periodic boundary conditions
     ip = np.arange(N) + 1  
@@ -57,4 +54,3 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
     return rho
 
 soln1 = advection(divisions,length,vm,rho_y0)
-print(soln1)
