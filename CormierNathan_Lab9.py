@@ -71,4 +71,15 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
 # same axes. Include these plots in your submission as
 # LastnameFirstname_Lab9_Fig1.png and LastnameFirstname_Lab9_Fig2.png.
 
+# calling function for desired input parameters
+# and assigning the output values of rho, xplot, and tplot for graphing
 r_xt, xp, tp = advection(divisions,length,vm,rho_y0)
+
+# 2D contour plotting code
+lvls = np.linspace(0., 1., num=11) 
+ct2d = plt.contour(xp, tp, np.flipud(np.rot90(r_xt)), lvls) 
+plt.clabel(ct2d, fmt='%1.2f') 
+plt.xlabel('x')
+plt.ylabel('time')
+plt.title('Density contours')
+plt.show()
