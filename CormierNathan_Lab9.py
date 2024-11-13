@@ -43,10 +43,11 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
     im = np.arange(N) - 1  
     im[0] = N-1          # im = i-1 with periodic b.c.
     
-    # Incorporating initial conditions
+    # Compute the flow = (Density)*(Velocity)
+    flow[:] = rho[:] * (v_max*(1 - rho[:]/p_max))
+    
+    # Compute rho using the lax method
+    rho[:] = .5*( rho[ip] + rho[im] ) - coeff*( flow[ip] - flow[im] )
 
-
-
-
-
-    return
+    # return the solved values of rho
+    return rho
