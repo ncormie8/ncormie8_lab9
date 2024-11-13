@@ -63,10 +63,12 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
     # return the solved values of rho over time
     return rho_final, xplot, tplot
 
-r_xt, xp, tp = advection(divisions,length,vm,rho_y0)
-print(np.shape(r_xt))
-print(np.shape(xp))
-print(np.shape(tp))
-
 # Part 2
+# Show the output of your code (time evolution of the traffic density) both as a 2D contour
+# plot, i.e. x on the horizontal axis and t on the vertical axis with ρ(x, t) as colour-coded
+# contours (see Figure 7.20, page 186, in your text for an example), and as a “snapshot”
+# plot in which in which ρ(x, t) is plotted versus x at selected time intervals, all on the
+# same axes. Include these plots in your submission as
+# LastnameFirstname_Lab9_Fig1.png and LastnameFirstname_Lab9_Fig2.png.
 
+r_xt, xp, tp = advection(divisions,length,vm,rho_y0)
