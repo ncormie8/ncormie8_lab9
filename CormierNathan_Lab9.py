@@ -38,8 +38,8 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
 
     # Incorporating stoplight initial condtions for rho
     rho[int(N/4):int(N/2)] = p_max
-    rho[0:int(N/4)] = rho_sl[1]
-    rho[int(N/2):] = rho_sl[1]
+    print(rho[int(N/4):int(N/2)])
+    print(np.size(rho[int(N/4):int(N/2)]))
 
     # Setting the initial state, rho(x,0)
     rho_final[:,0] = np.copy(rho)  
@@ -51,18 +51,17 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
     im[0] = N-1          # im = i-1 with periodic b.c.
     
     for istep in range(n_step):
-        # Compute the flow = (Density)*(Velocity)
+     # Compute the flow = (Density)*(Velocity)
         flow[:] = rho[:] * (v_max*(1 - rho[:]/p_max))
     
     # Compute rho using the lax method
         rho[:] = .5*( rho[ip] + rho[im] ) - coeff*( flow[ip] - flow[im] )
 
-    # Filling the output array with the calculated values of rho at all times
+    # Fill the output array with the calculated value of rho at time istep+1
         rho_final[:,istep+1] = np.copy(rho)
     
+
     # return the solved values of rho over time
-    print(rho_final[:,1])
-    print(rho_final[:,2])
     return rho_final, xplot, tplot
 
 # Part 2
