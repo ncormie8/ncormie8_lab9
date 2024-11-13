@@ -34,7 +34,7 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
     flow = np.zeros(shape=(N))
     rho_final = np.empty((N,n_step+1))
     xplot = (np.arange(N)-1/2.)*h - L/2.         
-    tplot = np.linspace(0,n_step*t_step,n_step)
+    tplot = np.linspace(0,n_step*t_step,n_step+1)
 
     # Incorporating stoplight initial condtions for rho
     rho[int(N/4):int(N/2)] = p_max
@@ -57,7 +57,8 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
     rho[:] = .5*( rho[ip] + rho[im] ) - coeff*( flow[ip] - flow[im] )
 
     # Filling the output array with the calculated values of rho at all times
-    rho_final[:,1:n_step] = np.copy(rho) 
+    rho = np.expand_dims(rho,axis=1)
+    rho_final[:,1:n_step] = rho
 
     # return the solved values of rho over time
     return rho_final, xplot, tplot
