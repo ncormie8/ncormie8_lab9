@@ -35,7 +35,11 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
 
     # Incorporating stoplight initial condtions
     rho[int(N/4):int(N/2)] = p_max
-    rho[0:N/4],rho[N/2:] = rho_sl[1]
+    print(rho[int(N/4):int(N/2)])
+    rho[0:int(N/4)] = rho_sl[1]
+    print(rho[0:int(N/4)])
+    rho[int(N/2):] = rho_sl[1]
+    print(rho[int(N/2):])
 
     # Periodic boundary conditions
     ip = np.arange(N) + 1  
@@ -51,3 +55,6 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
 
     # return the solved values of rho
     return rho
+
+soln1 = advection(divisions,length,vm,rho_y0)
+print(soln1)
