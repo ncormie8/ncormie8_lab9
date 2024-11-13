@@ -58,8 +58,9 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
 
     # Filling the output array with the calculated values of rho at all times
     rho = np.expand_dims(rho,axis=1)
-    rho_final[:,1:n_step] = rho
-
+    rho_final[:,1:n_step] = np.copy(rho)
+    print(rho_final[:,1])
+    print(rho_final[:,2])
     # return the solved values of rho over time
     return rho_final, xplot, tplot
 
@@ -74,7 +75,6 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
 # calling function for desired input parameters
 # and assigning the output values of rho, xplot, and tplot for graphing
 r_xt, xp, tp = advection(divisions,length,vm,rho_y0)
-
 
 print(np.flipud(np.rot90(r_xt)))
 # 2D contour plotting code
