@@ -17,8 +17,8 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
     '''Solves the advection equation for the 
     time evolution of rho(x,t) using the lax 
     method with rho_sl as the initial condition.
-    Returns function values of rho(x,t) over the
-    calculated number of steps for integration.'''
+    Returns function values of rho(x,t) over
+    1500 numerical integration steps.'''
 
     # Defining parameters
     N = grid_pts       # number of grid points
