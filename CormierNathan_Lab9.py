@@ -92,15 +92,16 @@ plt.show()
 # Initializing array to contain time intervals from tp
 t_intervals = np.zeros(shape=(5))
 rho_plot = np.zeros((np.size(t_intervals),600))
-stepsize = int(np.size(tp))/(np.size(t_intervals))
-print(type(stepsize))
-# Loop which divides tp into 19 evenly spaced time intervals of 79 timesteps each
-for p in range(np.size(t_intervals)-1):  # chose p as looping variable since tp is being parsed
-    t_intervals[p] = tp[stepsize]
-    rho_plot[p,:] = r_xt[(p*stepsize),:]
-    plt.plot(xp,rho_plot[p,:],label=('Interval '+ str(p+1)))
+stepsize = np.size(tp)/np.size(t_intervals)
 
-plt.title('Evolution of rho over 1500 Tau, across 5 evenly spaced intervals')
+# Loop which divides tp into 19 evenly spaced time intervals of 79 timesteps each
+for p in range(np.size(t_intervals)):  # chose p as looping variable since tp is being parsed
+    t_intervals[p] = tp[p*int(stepsize)]
+    rho_plot[p,:] = r_xt[(p*int(stepsize)),:]
+    plt.plot(xp,rho_plot[p,:],label=('Interval '+ str(p+1)+'(tau='+str(p*int(stepsize))+','+str((p+1)*int(stepsize))+')'))
+
+title = 'Evolution of rho over 1500 Tau, across '+str(int(stepsize))+' evenly spaced intervals'
+plt.title(title)
 plt.legend(loc=0,fontsize='small')
 plt.xlabel('x position')
 plt.ylabel('Density')
