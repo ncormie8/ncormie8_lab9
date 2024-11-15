@@ -94,13 +94,13 @@ t_intervals = np.zeros(shape=(5))
 rho_plot = np.zeros((np.size(t_intervals),600))  
 stepsize = np.size(tp)/np.size(t_intervals)
 
-# Loop which divides tp into 19 evenly spaced time intervals of 79 timesteps each
+# Loop which divides tp into int(np.size(t_intervals)) evenly spaced time intervals of stepsize timesteps each
 for p in range(np.size(t_intervals)):  # chose p as looping variable since tp is being parsed
     t_intervals[p] = tp[p*int(stepsize)]
     rho_plot[p,:] = r_xt[(p*int(stepsize)),:]
     plt.plot(xp,rho_plot[p,:],label=('Interval '+ str(p+1)+'(t='+str(0.08*p*int(stepsize))+' s)'))
 
-title = 'Evolution of rho over 1500 Tau, across '+str(np.size(t_intervals))+' evenly spaced intervals'
+title = 'Evolution of rho over '+str(np.size(t_intervals))+' evenly spaced intervals'
 plt.title(title)
 plt.legend(loc=0,fontsize='small')
 plt.xlabel('x position')
