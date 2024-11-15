@@ -89,19 +89,25 @@ plt.show()
 
 # Snapshot plotting code
 
-# Initializing array to fill with time positions 
-t_intervals = np.zeros(shape=(5))
-rho_plot = np.zeros((np.size(t_intervals),600))  
-stepsize = np.size(tp)/np.size(t_intervals)
+# Setting number of evenly place intervals / snapshots of rho to plot 
+t_intervals = 5
 
-# Loop which divides tp into int(np.size(t_intervals)) evenly spaced time intervals of stepsize timesteps each
-for p in range(np.size(t_intervals)):  # chose p as looping variable since tp is being parsed
-    t_intervals[p] = tp[p*int(stepsize)]
-    rho_plot[p,:] = r_xt[(p*int(stepsize)),:]
-    plt.plot(xp,rho_plot[p,:],label=('Interval '+ str(p+1)+'(t='+str(0.08*p*int(stepsize))+' s)'))
+# Initializing array of rho arrays to be plotted across the number of snaphots
+rho_plot = np.zeros((t_intervals,600)) # ini
 
-title = 'Evolution of rho over '+str(np.size(t_intervals))+' evenly spaced intervals'
-plt.title(title)
+# Determining the step size between snapshots for plotting
+stepsize = np.size(tp)/t_intervals
+
+# Loop which divides tp into "t_intervals" evenly spaced time intervals of "stepsize" timesteps each
+for p in range(t_intervals):  # chose p as looping variable since tp is being parsed
+    rho_plot[p,:] = r_xt[(p*int(stepsize)),:]  # set rho to be plotted equal to rho at the evenly space time step index
+    
+    # Plot rho at time interval with conditional label against xp
+    plt.plot(xp,rho_plot[p,:],label=('Interval '+ str(p+1)+'(t='+str(0.08*p*int(stepsize))+' s)')) 
+
+# Conditionally generate title
+plt.title('Evolution of rho over '+str(t_intervals)+' evenly spaced intervals')
+# Place legend in best place for least overlap of graph data, set font small
 plt.legend(loc=0,fontsize='small')
 plt.xlabel('x position')
 plt.ylabel('Density')
