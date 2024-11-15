@@ -33,13 +33,11 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
     rho = np.zeros(shape=(N))
     flow = np.zeros(shape=(N))
     rho_final = np.empty((N,n_step+1))
-    xplot = (np.arange(N)-1/2.)*h - L/2.         
+    xplot = np.arange(-N,N,h)        
     tplot = np.linspace(0,n_step*t_step,n_step+1)
 
     # Incorporating stoplight initial condtions for rho
     rho[int(N/4):int(N/2)] = p_max
-    print(rho[int(N/4):int(N/2)])
-    print(np.size(rho[int(N/4):int(N/2)]))
 
     # Setting the initial state, rho(x,0)
     rho_final[:,0] = np.copy(rho)  
@@ -60,7 +58,6 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
     # Fill the output array with the calculated value of rho at time istep+1
         rho_final[:,istep+1] = np.copy(rho)
     
-
     # return the solved values of rho over time
     return rho_final, xplot, tplot
 
@@ -75,7 +72,7 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
 # calling function for desired input parameters
 # and assigning the output values of rho, xplot, and tplot for graphing
 r_xt, xp, tp = advection(divisions,length,vm,rho_y0)
-
+print(xp)
 # 2D contour plotting code
 lvls = np.linspace(0., 1., num=11) 
 ct2d = plt.contour(xp, tp, np.flipud(np.rot90(r_xt)), lvls) 
