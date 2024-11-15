@@ -84,3 +84,7 @@ plt.xlabel('x')
 plt.ylabel('time')
 plt.title('Density contours')
 plt.show()
+
+# Snapshot plotting code
+print(tp)
+print(np.size(tp))
