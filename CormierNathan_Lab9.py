@@ -106,7 +106,7 @@ for p in range(t_intervals):  # chose p as looping variable since tp is being pa
     plt.plot(xp,rho_plot[p,:],label=('Interval '+ str(p+1)+'(t='+str(0.08*p*int(stepsize))+' s)')) 
 
 # Conditionally generate title
-plt.title('Evolution of rho over '+str(t_intervals)+' evenly spaced intervals')
+plt.title('Time evolution of density over '+str(t_intervals)+' evenly spaced intervals')
 # Place legend in best place for least overlap of graph data, set font small
 plt.legend(loc=0,fontsize='small')
 plt.xlabel('x position')
