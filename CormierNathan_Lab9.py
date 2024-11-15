@@ -35,9 +35,9 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
     # Initializing density, flow, final output, x scale, and time scale arrays
     rho = np.zeros(shape=(N))
     flow = np.zeros(shape=(N))
-    rho_final = np.empty((N,n_step+1))
+    rho_final = np.empty((N,n_step))
     xplot = np.arange(-N,N,h)        
-    tplot = np.linspace(0,n_step*t_step,n_step+1)
+    tplot = np.linspace(0,n_step*t_step,n_step)
 
     # Incorporating stoplight initial condtions for rho
     rho[int(N/4):int(N/2)] = p_max
@@ -59,7 +59,7 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
         rho[:] = .5*( rho[ip] + rho[im] ) - coeff*( flow[ip] - flow[im] )
 
     # Fill the output array with the calculated value of rho at time istep+1
-        rho_final[:,istep+1] = np.copy(rho)
+        rho_final[:,istep] = np.copy(rho)
     
     # return the solved values of rho over time
     return rho_final, xplot, tplot
@@ -75,21 +75,33 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
 # calling function for desired input parameters
 # and assigning the output values of rho, xplot, and tplot for graphing
 r_xt, xp, tp = advection(divisions,length,vm,rho_y0)
+r_xt = np.flipud(np.rot90(r_xt))
 
 # 2D contour plotting code
-lvls = np.linspace(0., 1., num=11) 
-ct2d = plt.contour(xp, tp, np.flipud(np.rot90(r_xt)), lvls) 
-plt.clabel(ct2d, fmt='%1.2f') 
+lvls = np.linspace(0., rho_m, num=11) 
+ct2d = plt.contour(xp, tp, r_xt, lvls) 
+plt.clabel(ct2d, fmt='%1.2f')
+plt.colorbar()
 plt.xlabel('x')
 plt.ylabel('time')
 plt.title('Density contours')
 plt.show()
 
 # Snapshot plotting code
-t_intervals = np.zeros(shape=(19,79))
 
-for p in range(19):
-    t_intervals[p][:] = tp[p*79:(p+1)*79]
+# Initializing array to contain time intervals from tp
+t_intervals = np.zeros(shape=(5))
+rho_plot = np.zeros((np.size(t_intervals),600))
+stepsize = int(np.size(tp))/(np.size(t_intervals))
+print(type(stepsize))
+# Loop which divides tp into 19 evenly spaced time intervals of 79 timesteps each
+for p in range(np.size(t_intervals)-1):  # chose p as looping variable since tp is being parsed
+    t_intervals[p] = tp[stepsize]
+    rho_plot[p,:] = r_xt[(p*stepsize),:]
+    plt.plot(xp,rho_plot[p,:],label=('Interval '+ str(p+1)))
 
-print(t_intervals[18][:])
-print(tp[1422:1501])
+plt.title('Evolution of rho over 1500 Tau, across 5 evenly spaced intervals')
+plt.legend(loc=0,fontsize='small')
+plt.xlabel('x position')
+plt.ylabel('Density')
+plt.show()
