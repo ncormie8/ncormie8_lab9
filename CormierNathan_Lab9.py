@@ -86,5 +86,10 @@ plt.title('Density contours')
 plt.show()
 
 # Snapshot plotting code
-print(tp)
-print(np.size(tp))
+t_intervals = np.zeros(shape=(19,79))
+
+for p in range(18):
+    t_intervals[p][:] = tp[p*79:(p+1)*79]
+
+print(t_intervals[0][:])
+print(tp[0:79])
