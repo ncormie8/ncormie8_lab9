@@ -18,7 +18,10 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
     time evolution of rho(x,t) using the lax 
     method with rho_sl as the initial condition.
     Returns function values of rho(x,t) over
-    1500 numerical integration steps.'''
+    1500 numerical integration steps, along with
+    appropriately sized x and t arrays for plotting
+    the change in density with respect to position
+    and time.'''
 
     # Defining parameters
     N = grid_pts       # number of grid points
@@ -72,7 +75,7 @@ def advection(grid_pts,sys_size,v_max,rho_sl):
 # calling function for desired input parameters
 # and assigning the output values of rho, xplot, and tplot for graphing
 r_xt, xp, tp = advection(divisions,length,vm,rho_y0)
-print(xp)
+
 # 2D contour plotting code
 lvls = np.linspace(0., 1., num=11) 
 ct2d = plt.contour(xp, tp, np.flipud(np.rot90(r_xt)), lvls) 
