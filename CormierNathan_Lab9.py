@@ -88,8 +88,8 @@ plt.show()
 # Snapshot plotting code
 t_intervals = np.zeros(shape=(19,79))
 
-for p in range(18):
+for p in range(19):
     t_intervals[p][:] = tp[p*79:(p+1)*79]
 
-print(t_intervals[0][:])
-print(tp[0:79])
+print(t_intervals[18][:])
+print(tp[1422:1501])
