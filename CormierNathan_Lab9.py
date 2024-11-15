@@ -82,25 +82,25 @@ lvls = np.linspace(0., rho_m, num=11)
 ct2d = plt.contour(xp, tp, r_xt, lvls) 
 plt.clabel(ct2d, fmt='%1.2f')
 plt.colorbar()
-plt.xlabel('x')
-plt.ylabel('time')
-plt.title('Density contours')
+plt.xlabel('x position')
+plt.ylabel('time (s)')
+plt.title('Density Contours')
 plt.show()
 
 # Snapshot plotting code
 
-# Initializing array to contain time intervals from tp
+# Initializing array to fill with time positions 
 t_intervals = np.zeros(shape=(5))
-rho_plot = np.zeros((np.size(t_intervals),600))
+rho_plot = np.zeros((np.size(t_intervals),600))  
 stepsize = np.size(tp)/np.size(t_intervals)
 
 # Loop which divides tp into 19 evenly spaced time intervals of 79 timesteps each
 for p in range(np.size(t_intervals)):  # chose p as looping variable since tp is being parsed
     t_intervals[p] = tp[p*int(stepsize)]
     rho_plot[p,:] = r_xt[(p*int(stepsize)),:]
-    plt.plot(xp,rho_plot[p,:],label=('Interval '+ str(p+1)+'(tau='+str(p*int(stepsize))+','+str((p+1)*int(stepsize))+')'))
+    plt.plot(xp,rho_plot[p,:],label=('Interval '+ str(p+1)+'(t='+str(0.08*p*int(stepsize))+' s)'))
 
-title = 'Evolution of rho over 1500 Tau, across '+str(int(stepsize))+' evenly spaced intervals'
+title = 'Evolution of rho over 1500 Tau, across '+str(np.size(t_intervals))+' evenly spaced intervals'
 plt.title(title)
 plt.legend(loc=0,fontsize='small')
 plt.xlabel('x position')
